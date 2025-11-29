@@ -113,11 +113,24 @@ _**Note:** A cloud-deployed demo is available for easy access, see **Online Demo
 
 ---
 
-
 ## History Transparency  
 
 This repo reflects the final, fully refactored implementation and lessons learned after significant experimentation and project pivots.  
 Earlier work was not retained, in order to provide a clear, focused codebase.
+
+---
+
+## Citations & References
+
+**Backbone architectures:**
+- EfficientNetV2: [EfficientNetV2: Smaller Models and Faster Training](https://arxiv.org/abs/2104.00298) (Mingxing Tan, Quoc V. Le. ICML 2021)
+- MobileNetV3: [Searching for MobileNetV3](https://arxiv.org/abs/1905.02244) (Andrew Howard et al. ICCV 2019)
+- ConvNeXt: [A ConvNet for the 2020s](https://arxiv.org/abs/2201.03545) (Zhuang Liu et al. CVPR 2022)
+
+**Output heads architectures:**
+_Not directly implemented, but inspired by:_  
+- FCN: [Fully Convolutional Networks for Semantic Segmentation](https://arxiv.org/abs/1411.4038) (Jonathan Long, Evan Shelhamer, Trevor Darrell. CVPR 2015)
+- U-Net: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597) (Olaf Ronneberger, Philipp Fischer, Thomas Brox. MICCAI 2015)
 
 ---
 
