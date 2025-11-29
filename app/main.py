@@ -75,6 +75,9 @@ TEMPLATES = Jinja2Templates(directory='templates')
 # Max file size for uploads (5 MB)
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
 
+# Max characters from the BASE64 mask to include in the HTML display
+MAX_BASE64_DISPLAY = 10
+
 
 # MAIN APPLICATION
 
@@ -223,7 +226,7 @@ async def upload(
         result = {
             'class_id': class_id,
             'class_name': class_name,
-            'mask64_PNG_L': mask64,
+            'mask64_PNG_L': mask64[:MAX_BASE64_DISPLAY] + "...", # Truncated for HTML display
         }
 
         # Schedule deletion of both images after 10 seconds
@@ -279,7 +282,7 @@ async def random_sample(request: Request, background_tasks: BackgroundTasks = No
         result = {
             'class_id': class_id,
             'class_name': class_name,
-            'mask64_PNG_L': mask64,
+            'mask64_PNG_L': mask64[:MAX_BASE64_DISPLAY] + "...", # Truncated for HTML display
         }
 
         # Schedule deletion of both images after 10 seconds
