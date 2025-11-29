@@ -8,7 +8,7 @@ The aim is to deliver a complete pipeline—data preprocessing, model training a
 ## Online Demo
 
 The final version is deployed in Hugging Face Spaces and can be accessed and tried via Rest API or with the front UI page included:
-[link_to_hf]
+[Hugging Face Spaces deployed DEMO](https://huggingface.co/spaces/Kev-HL/capsule-defect-segmentation-api)
 
 ---
 
