@@ -25,4 +25,9 @@ core
 *.env
 
 # Except (un-ignore) the final model file for deployment
+!models/final_model/
 !models/final_model/final_model.tflite
+
+# Except (un-ignore) the LICENSE file of the dataset
+!data/capsule/
+!data/capsule/license.txt
