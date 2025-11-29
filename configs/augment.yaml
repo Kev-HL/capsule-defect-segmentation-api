@@ -1,0 +1,19 @@
+# Data Augmentation Parameters
+REPEAT_FACTOR: 10           # Gets overridden in code by the ceiling of the max multiplier (to ensure enough samples) in train_dataset_assembly function.
+                            # Set carefully or override manually if using individual pipeline functions
+MULTIPLIER_GOOD: 0.75       # 1.75x total good samples once the originals are added
+MULTIPLIER_DEFECT: 8.5      # 9.5x total defect samples once the originals are added
+# Light augmentation settings (used for 'good' samples)
+light:
+    brightness_max_delta: 0.1
+    contrast_lower: 0.9
+    contrast_upper: 1.1
+# Aggressive augmentation settings (used for 'defect' samples)
+aggressive:
+    brightness_max_delta: 0.2
+    contrast_lower: 0.8
+    contrast_upper: 1.2
+    saturation_lower: 0.8
+    saturation_upper: 1.2
+    hue_max_delta: 0.02
+    max_translation_shift: 0.05

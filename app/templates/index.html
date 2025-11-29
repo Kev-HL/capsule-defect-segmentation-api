@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[DEMO] ML API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        form { margin-bottom: 1em; }
+        #result { white-space: pre-wrap; background: #f5f5f5; padding: 1em; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>[DEMO] Defect Classification & Localization on MVTec AD Capsule Dataset</h1>
+
+    <!-- This form allows users to upload a PNG image for defect detection -->
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        <label for="file">Upload PNG image:</label>
+        <input type="file" id="file" name="file" accept="image/png" required>
+        <button type="submit">Predict</button>
+    </form>
+
+    <!-- This button allows users to try a random sample image using the following script-->
+    <button id="randomBtn">Try a random sample image</button>
+    <script>
+    document.getElementById("randomBtn").onclick = function() {
+        // Submit POST to /random-sample/ without any file
+        fetch("/random-sample/", {method: "POST"})
+        .then(response => response.text())
+        .then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+        });
+        return false;
+    };
+    </script>
+
+    <!-- Display the result of the prediction -->
+    <!-- First display the prediction and then the json result -->
+
+    {% if preproc_img_url and pred_img_url %}
+        <h3>Preprocessed image (as seen by the model):</h3>
+        <img src="{{ preproc_img_url }}" alt="preprocessed" style="max-width: 400px; border:1px solid #ccc;">
+        <h3>Prediction image:</h3>
+        <img src="{{ pred_img_url }}" alt="prediction" style="max-width: 400px; border:1px solid #ccc;">
+    {% endif %}
+    {% if result %}
+        <h2>Result</h2>
+        <div id="result">{{ result | tojson(indent=2) }}</div>
+    {% endif %}
+</body>
+</html>

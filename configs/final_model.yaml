@@ -1,0 +1,51 @@
+# Default values for the experiment
+# Experiment description: Configuration for final model training, with settings chosen based on previous experiments.
+experiment_name: final_model
+
+# Model parameters:
+base: ConvNeXtTiny              # Currently supports [EfficientNetV2B3, EfficientNetV2S, MobileNetV3Large, ConvNeXtTiny].
+                                # Update imports and backbone_class_map in model_builder.py to add more backbones.
+input_size: [512, 512]          # [Height, Width] Used as preprocessing target for resize as well as for the input layer of the model.
+label_head:                     # Configuration for the classification head:
+  dense_units: [256, 128]       # Number of hidden units in the dense layers of the classification head
+  dropout: 0.5                  # Dropout rate to be used in the dense layers of the classification head
+mask_head:                      # Configuration for the segmentation head:
+  type: U_Net_Lite              # Type of segmentation head to use. Currently supports [FCN_Lite, U_Net_Lite].
+  FCN_filters:                  # Number of filters in the separable conv layers of the FCN_lite architecture.
+  FCN_blocks:                   # Number of SeparableConv2D+BN+ReLU+SpatialDropOut2D blocks in the segmentation head for FCN_Lite.
+  UNET_base_filters: 256        # Number of base filters used in the separable conv layers of the U_Net_Lite architecture.
+  dropout: 0.5                  # Dropout rate to be used in the SeparableConv2D+BN+ReLU+SpatialDropOut2D block (used in both FCN_Lite and U_Net_Lite, rate of 0.0 disables the layer).
+
+# Training parameters:
+# The training script allows execution of one stage independently, can be chained for 2 stage training.
+# Stage 1 (frozen base model, unfrozen heads)
+st1_epochs: 50                  # Max number of epochs to be run (unless early stopped) in stage 1.
+st1_lr: 1e-4                    # Initial LR for stage 1 training.
+st1_optimizer: Adam             # Options available [Adam, AdamW], to add more modify optimizer_fn_map in the training script train_stage.py
+st1_patience_early_stop: 30     # Patience for early stopping callback during stage 1.
+st1_patience_lr_reduce: 15      # Patience for ReduceLROnPlateau callback during stage 1.
+# Stage 2 (fully unfrozen/trainable model)
+st2_epochs: 200                 # Max number of epochs to be run (unless early stopped) in stage 2.
+st2_lr: 3e-5                    # Initial LR for stage 2 training.
+st2_optimizer: Adam             # Options available [Adam, AdamW], to add more modify optimizer_fn_map in the training script train_stage.py
+st2_patience_early_stop: 40     # Patience for early stopping callback during stage 2.
+st2_patience_lr_reduce: 20      # Patience for ReduceLROnPlateau callback during stage 2.
+st2_train_BN_gamma_beta: True   # Whether to train BatchNorm gamma and beta parameters on the backbone when unfrozen (moving stats always frozen, hardcoded in model builder logic)
+# Parameters shared across stages
+clipnorm: 1.0                   # Clipnorm value to be used with the optimizer (default None).
+weight_decay:                   # Weight decay to be used with AdamW optimizer (default 1e-4).
+label_weight: 1.0               # Weight for label loss.
+mask_weight: 1.0                # Weight for mask loss.
+bce_dice_loss_alpha: 1.0        # Alpha parameter for combined BCE + Dice loss.
+bce_dice_loss_beta: 1.0         # Beta parameter for combined BCE + Dice loss.
+monitor_metric: val_loss        # Metric to be monitored by callbacks
+monitor_mode: min               # Mode for the monitored metric (min, max or auto)
+factor_lr_reduce: 0.5           # Reducing factor for ReduceLROnPlateau callback.
+min_lr_reduce: 1e-6             # Minimum LR for ReduceLROnPlateau callback.
+folds:                          # Number of folds (only if using k-Fold validation).
+kfold_seeds:                    # Number of different seeds to run k-Fold with (results will be averaged across seeds and folds, total runs = folds * kfold_seeds).
+
+# Other settings
+verbose: 2                      # Enables verbose settings for training and callbacks (0: no output, 1: line per batch, 2: one line per epoch).
+enable_TB_histograms: 1         # 0 disabled, 1 default
+base_dir: "models/final_model"  # Directory for the experiment (will be overwritten by Ray Tune's experiment setup function to avoid mismatches).

@@ -1,0 +1,10 @@
+# Default experiment configuration
+experiment_name: kfold_candidate      # Name of the experiment to be passed on to Ray Tune. Will override the default value to avoid mismatches.
+base_dir: "models/"                   # Base directory for experiments (experiment will be saved in base_dir/experiment_name/).
+enable_TB_histograms: 0               # 0 disabled, 1 default (force disable during sweep to save memory).
+
+# Path to the YAML files with the default parameter values of the experiment:
+default_config: "configs/experiments/kfold_candidate_default.yaml"
+
+# Parameter values to be iterated over (if empty, single run experiment with default values):
+# E.g. st1_epochs = [100, 200, 500]

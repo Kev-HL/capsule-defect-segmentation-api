@@ -1,0 +1,39 @@
+# Default values for the experiment
+# Experiment description: Overfit test with a small data subset (20-30 samples) to ensure there are no issues with our general models.
+experiment_name: overfit_test
+
+# Model parameters:
+base: EfficientNetV2B3          # Currently supports [EfficientNetV2B3, EfficientNetV2S, MobileNetV3Large, ConvNeXtTiny].
+                                # Update imports and backbone_class_map in model_builder.py to add more backbones.
+input_size: [300, 300]          # [Height, Width] Used as preprocessing target for resize as well as for the input layer of the model.
+label_head:                     # Configuration for the classification head:
+  dense_units: [256, 128]       # Number of hidden units in the dense layers of the classification head
+  dropout: 0.0                  # Dropout rate to be used in the dense layers of the classification head
+mask_head:                      # Configuration for the segmentation head:
+  type: U_Net_Lite              # Type of segmentation head to use. Currently supports [FCN_Lite, U_Net_Lite].
+  FCN_filters:                  # Number of filters in the separable conv layers of the FCN_lite architecture.
+  FCN_blocks:                   # Number of SeparableConv2D+BN+ReLU+SpatialDropOut2D blocks in the segmentation head for FCN_Lite.
+  UNET_base_filters: 128        # Number of base filters used in the separable conv layers of the U_Net_Lite architecture.
+  dropout: 0.0                  # Dropout rate to be used in the SeparableConv2D+BN+ReLU+SpatialDropOut2D block (used in both FCN_Lite and U_Net_Lite, rate of 0.0 disables the layer).
+
+# DO NOT USE this file as template (use instead the baseline one), overfit test does not use the normal training functions of the project (due to the need to skip the data augmentation process)
+
+# Training parameters (Only 1 stage, full trainable model, but with BN layers of backbone frozen)
+lr: 1e-3                        # Initial LR for training
+optimizer: Adam                 # Hardcoded to Adam optimizer for this experiment (config value not used)
+clipnorm: 1.0                   # Clipnorm value to be used with the optimizer (default None)
+weight_decay: 1e-4              # Weight decay to be used with AdamW optimizer (default 1e-4)
+epochs: 100                     # Max number of epochs to be run (unless early stopped)
+label_weight: 1.0               # Weight for label loss
+mask_weight: 1.0                # Weight for mask loss
+bce_dice_loss_alpha: 1.0        # Alpha parameter for combined BCE + Dice loss (alpha*BCE + beta*(1 - Dice_coef)).
+bce_dice_loss_beta: 1.0         # Beta parameter for combined BCE + Dice loss (alpha*BCE + beta*(1 - Dice_coef))
+monitor_metric: val_loss        # Metric to be monitored by callbacks
+monitor_mode: min               # Mode for the monitored metric (min, max or auto)
+patience_early_stop: 0          # Patience for early stopping callback
+patience_lr_reduce: 20          # Patience for LR reduce on plateau callback
+factor_lr_reduce: 0.5           # Reducing factor for LR reduce on plateau callback
+min_lr_reduce: 1e-6             # Minimum LR for LR reduce on plateau callback
+verbose: 2                      # Enables verbose settings for training and callbacks (0: no output, 1: line per batch, 2: one line per epoch)
+enable_TB_histograms: 0         # 0 disabled, 1 default
+output_dir: "models/overfit_test"  # Directory to save results

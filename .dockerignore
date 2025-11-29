@@ -1,0 +1,52 @@
+# Dockerignore file for excluding unnecessary files from the Docker build context
+# Byte-compiled / cache
+# Python cache folders
+__pycache__/
+# Compiled Python files (.pyc, .pyo, etc.)
+*.py[cod]
+# Temporary files from Jupyter notebooks
+*.ipynb_checkpoints/
+
+# Environment
+# Environment variables files
+.env
+# Catch other .env-like files
+*.env
+
+# OS metadata files
+.DS_Store
+Thumbs.db
+
+# VSCode
+# Editor-specific settings
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Logs, temp files
+*.log
+logs/
+core
+
+# Documentation
+Project_Strategy.md
+# Don't add config files
+/configs/
+# Don't add datasets
+/data/
+# Don't add Python notebooks
+/notebooks/
+# Don't add scripts
+/scripts/
+# Don't add modules
+/src/
+# Don't add trained model files
+/models/
+# Exclude final model file
+!/models/final_model/final_model.tflite
+
+# Don't add main repo requirements.txt file
+# The requirements.txt for the Docker image is in app/requirements.txt
+/requirements.txt

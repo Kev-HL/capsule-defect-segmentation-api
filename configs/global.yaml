@@ -1,0 +1,8 @@
+# Global Settings
+SEED: 33                        # Global seed used during development was 33
+BATCH_SIZE: 16                  # If changed adjust LR accordingly
+enable_op_determinism: False
+
+# Data-Split Settings
+test_size: 0.15
+val_size: 0.15

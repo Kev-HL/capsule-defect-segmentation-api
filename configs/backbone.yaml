@@ -1,0 +1,31 @@
+# Backbone Parameters
+    # class_name: Name (str) of the model to be used with a python dict to map its class (mapping dict in model_builder.py)
+    # include_preprocessing: whether to include the preprocessing layer of the model (check Keras documentation for the backbone)
+    # skip_layer_names: List of layer names (str) from which to extract feature maps for the U-Net-Lite localization head.
+    #                   Chosen layers after each spatial dowsampling stage.
+# If adding other backbones which require extra arguments or different preprocessing layer syntax, ensure to update the base_model creation function model_builder.py
+backbone:
+    EfficientNetV2B3:  # default 300x300
+        class_name: EfficientNetV2B3
+        include_preprocessing: True
+        skip_layer_names: [block2a_expand_activation, block3a_expand_activation, block4a_activation, block6a_activation]
+    EfficientNetV2S:  # default 384x384
+        class_name: EfficientNetV2S
+        include_preprocessing: True
+        skip_layer_names: [block2a_expand_activation, block3a_expand_activation, block4a_activation, block6a_activation]
+    EfficientNetV2M:  # default 384x384
+        class_name: EfficientNetV2M
+        include_preprocessing: True
+        skip_layer_names: [block2a_expand_activation, block3a_expand_activation, block4a_activation, block6a_activation]
+    MobileNetV3Large: # default 224x224
+        class_name: MobileNetV3Large
+        include_preprocessing: True
+        skip_layer_names: [re_lu_2, re_lu_6, activation_2, activation_14]
+    ConvNeXtSmall: # default 224x224
+        class_name: ConvNeXtSmall
+        include_preprocessing: True
+        skip_layer_names: [convnext_small_stage_0_block_0_gelu, convnext_small_stage_1_block_0_gelu, convnext_small_stage_2_block_0_gelu, convnext_small_stage_3_block_0_gelu]
+    ConvNeXtTiny: # default 224x224
+        class_name: ConvNeXtTiny
+        include_preprocessing: True
+        skip_layer_names: [convnext_tiny_stage_0_block_0_gelu, convnext_tiny_stage_1_block_0_gelu, convnext_tiny_stage_2_block_0_gelu, convnext_tiny_stage_3_block_0_gelu]
