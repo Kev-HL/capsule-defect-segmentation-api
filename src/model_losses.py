@@ -1,7 +1,10 @@
 """
-This module contains custom loss functions for the localization (segmentation) task in a deep learning model.
-    NOTE: Dice loss and BCE loss may be included as metrics during model training for monitoring purposes.
-    For Dice loss 'dice_loss' can be used directly, for BCE use built-in metric instead (tf.keras.metrics.BinaryCrossentropy(name='bce_metric', from_logits=False))
+This module contains custom loss functions for the localization (segmentation) task in
+a deep learning model.
+    NOTE: Dice loss and BCE loss may be included as metrics during model training for
+    monitoring purposes.
+    For Dice loss 'dice_loss' can be used directly, for BCE use built-in metric instead
+    (tf.keras.metrics.BinaryCrossentropy(name='bce_metric', from_logits=False))
 """
 
 # Imports
@@ -41,13 +44,17 @@ _bce = tf.keras.losses.BinaryCrossentropy(from_logits=False)
 
 
 # Factory function to create combined BCE + Dice loss with configurable weights
-def create_bce_dice_loss(alpha=1.0, beta=1.0) -> Callable[[tf.Tensor, tf.Tensor], tf.Tensor]:
+def create_bce_dice_loss(
+    alpha=1.0, beta=1.0
+) -> Callable[[tf.Tensor, tf.Tensor], tf.Tensor]:
     """
     Creates a combined BCE + Dice loss function with configurable weights.
     """
+
     @tf.keras.utils.register_keras_serializable()
     def mask_loss(y_true, y_pred) -> tf.Tensor:
-        bce = _bce(y_true, y_pred)           # scalar over batch
-        dl  = dice_loss(y_true, y_pred)      # scalar over batch
+        bce = _bce(y_true, y_pred)  # scalar over batch
+        dl = dice_loss(y_true, y_pred)  # scalar over batch
         return alpha * bce + beta * dl
+
     return mask_loss
