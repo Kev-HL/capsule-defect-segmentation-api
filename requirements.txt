@@ -2,6 +2,8 @@
 # Python version used during development: 3.12.3
 # Note: Tensorflow used for development is a custom build to support newer GPUs (e.g., RTX 5000 series)
 #       The specific build was based on https://github.com/tensorflow/tensorflow commit 1f4ee8bcd86b7333e9a98f666d70309fc7c8907a
+black==26.5.1
+flake8==7.3.0
 jupyter==1.1.1
 matplotlib==3.10.7
 numpy==2.1.3
