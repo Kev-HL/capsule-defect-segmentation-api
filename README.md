@@ -1,5 +1,14 @@
 # Capsule Defect Detection and Segmentation with ConvNeXt+U-Net and FastAPI
 
+![CI](https://github.com/Kev-HL/capsule-defect-segmentation-api/actions/workflows/ci.yaml/badge.svg)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+![TensorFlow 2.20](https://img.shields.io/badge/tensorflow-2.20-orange.svg)
+![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![Ray Tune](https://img.shields.io/badge/Ray%20Tune-028CF0?logo=ray&logoColor=white)
+
+
 This project addresses a real-world computer vision challenge: detecting and localizing defects on medicinal capsules via image classification and segmentation.  
 The aim is to deliver a complete pipeline—data preprocessing, model training and evaluation, and deployment, demonstrating practical ML engineering from scratch to API.
 
@@ -68,6 +77,7 @@ Key steps include:
 - Scikit-Learn
 - Numpy / Pandas
 - OpenCV / Pillow
+- Black / Flake8
 - Ray Tune (Experiment tracking)
 - OmegaConf (Config management)
 - Docker, FastAPI, Uvicorn (Deployment)
